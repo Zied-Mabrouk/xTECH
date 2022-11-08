@@ -1,0 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+:root{
+    --primary-color:rgb(80, 188, 242,0.4);
+    --secondary-color:rgba(34, 116, 158, 0.4);
+    --text-color:rgb(76, 75, 75);
+}
