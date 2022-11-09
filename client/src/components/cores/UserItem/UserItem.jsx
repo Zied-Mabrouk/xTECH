@@ -21,9 +21,12 @@ const UserItem = ({ user, handleOpenConversation }) => {
       </div>
 
       <div className="user-item-extra">
-        <span>
-          {GetTime(user?.lastMessage?.date)}
+        {
+          user && user.lastMessage &&
+          <span>
+          {GetTime(user.lastMessage.date)}
         </span>
+        }
         <span className="user-item-status"></span>
       </div>
     </div>

@@ -39,7 +39,6 @@ router.post("/friends", async (req, res) => {
             let lastMessage = await MessageModel
             .find({ $or: [{ from: id, to: friend._id }, { from: friend._id, to: id }] })
             .sort({ date: -1 });
-            console.log(lastMessage);
             lastMessage = lastMessage[0];
             friend ={...friend._doc,lastMessage}
             return friend;

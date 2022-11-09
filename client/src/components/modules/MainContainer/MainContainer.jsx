@@ -1,51 +1,81 @@
 import React from "react";
 import { sendMessage } from "../../../api";
 import "./MainContainer.scss";
-import io from 'socket.io-client';
+import io from "socket.io-client";
 
-const MainContainer = ({ conversation, setConversation, width, user,list,setList}) => {
-
+const MainContainer = ({
+  conversation,
+  setConversation,
+  width,
+  user,
+  list,
+  setList,
+}) => {
   let [message, setMessage] = React.useState({
     content: "",
     targetType: 0,
     type: 0,
   });
 
-  let[socket,setSocket] = React.useState(io('http://localhost:5000'));
-
- 
+  let [socket, setSocket] = React.useState(io("http://localhost:5000"));
 
   const onSend = async () => {
-    const newMessage = { ...message, from: user?._id, to: conversation?.friend?._id, }
+    const newMessage = {
+      ...message,
+      from: user?._id,
+      to: conversation?.friend?._id,
+    };
     setConversation({
       ...conversation,
-      messages: [...conversation.messages,newMessage ],
+      messages: [...conversation.messages, newMessage],
     });
-   
-    await sendMessage(newMessage)
+
+    await sendMessage(newMessage);
     setMessage({
       content: "",
       targetType: 0,
       type: 0,
     });
-    setList(list.map(item=>item._id===conversation.friend._id?{...item,lastMessage:newMessage}:item))
-    socket.emit('send_message', {id:user._id,message:newMessage});
+    setList(
+      list.map((item) =>
+        item._id === conversation.friend._id
+          ? { ...item, lastMessage: newMessage }
+          : item
+      )
+    );
+    socket.emit("send_message", newMessage);
   };
-  React.useEffect(()=>{
-    socket.on("receive_message",(data)=>{
-      if(data &&data.id!==user?._id){
-      const messages = conversation?.messages;
-      messages?.push(data?.message)
-      setConversation({
-        ...conversation,
-        messages: messages,
-      });
+  React.useEffect(() => {
+    socket.on("receive_message", (data) => {
+      if (!data) return;
+      if (!user) return;
+
+      if (data.from === user._id) {
+        setConversation({
+          ...conversation,
+          messages: [...conversation.messages, data],
+        });
+        return;
       }
-      
-    })
-  },[socket,user,conversation,setConversation])
+
+      if (data.to === user?._id) {
+        if (conversation && conversation.friend._id === data.from)
+          setConversation({
+            ...conversation,
+            messages: [...conversation.messages, data]
+          });
+        setList(
+          list.map((item) =>
+            item._id === data.from
+              ? { ...item, lastMessage: data }
+              : item
+          )
+        );
+      }
+    });
+  }, [socket, user, conversation, setConversation,list,setList]);
   return (
-    <div className="main-container" style={{ width: width }} >
+    <div className="main-container" style={{ width: width }}>
       <div className="conversation">
         {conversation ? (
           conversation?.messages?.map((m, index) => (
