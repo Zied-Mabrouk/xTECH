@@ -24,10 +24,11 @@ const MainContainer = ({
       ...message,
       from: user?._id,
       to: conversation?.friend?._id,
+      date: new Date()
     };
     setConversation({
       ...conversation,
-      messages: [...conversation.messages, newMessage],
+      messages: [...conversation.messages, newMessage]
     });
 
     await sendMessage(newMessage);

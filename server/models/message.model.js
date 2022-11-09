@@ -23,8 +23,8 @@ const messageSchema = new mongoose.Schema({
         required:true
     },
     date:{
-        type:Number,
-        default:(Math.floor(Date.now()))
+        type:Date,
+        required:true
     }
 });
 
