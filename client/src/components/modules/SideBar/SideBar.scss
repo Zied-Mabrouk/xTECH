@@ -1,0 +1,13 @@
+.sidebar {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  transition: width 400ms ease-in-out ; 
+  width:0;
+}
+.sidebar.active{
+  width: 20vw;
+  position: relative;
+  display: flex;
+}

@@ -1,0 +1,106 @@
+.user-item {
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  box-shadow: 0 0 1px rgb(0, 0, 0, 0.2);
+  gap: 8px;
+  overflow: hidden;
+  &:hover {
+    background-color: var(--secondary-color);
+    transition: transform 200ms ease-in-out;
+    transform: translateX(2px);
+    cursor: pointer;
+    .user-item-info {
+      .user-item-name {
+        color: #fdfdfe;
+      }
+      .user-item-message {
+        color: #f2f6f7;
+      }
+    }
+  }
+
+  .user-item-avatar {
+    height: 40px;
+    img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid transparent;
+    }
+  }
+  .user-item-info {
+    display: flex;
+    flex-direction: column;
+    width: calc(85% - 56px);
+    gap: 6px;
+    .user-item-name {
+      font-size: 14px;
+      color: var(--text-color);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .user-item-message {
+      text-overflow: ellipsis;
+      font-weight: 100;
+      white-space: nowrap;
+      max-width: 100%;
+      width: 100%;
+      font-size: 10px;
+      color: var(--text-color-light);
+      overflow: hidden;
+    }
+  }
+  .user-item-extra {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    > span {
+      color: var(--text-color);
+      font-size: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .user-item-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: red;
+    }
+  }
+}
+.user-item.busy {
+  .user-item-status {
+    background-color: #ff9b26;
+  }
+  .user-item-avatar {
+    img {
+      border-color: #ff9b26;
+    }
+  }
+}
+.user-item.offline {
+  .user-item-status {
+    background-color: #fd2828;
+  }
+  .user-item-avatar {
+    img {
+      border-color: #fd2828;
+    }
+  }
+}
+.user-item.online {
+  .user-item-status {
+    background-color: #46d362;
+  }
+  .user-item-avatar {
+    img {
+      border-color: #46d362;
+    }
+  }
+}

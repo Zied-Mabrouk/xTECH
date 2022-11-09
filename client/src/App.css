@@ -5,7 +5,13 @@
     font-family: sans-serif;
 }
 :root{
-    --primary-color:rgb(80, 188, 242,0.4);
-    --secondary-color:rgba(34, 116, 158, 0.4);
-    --text-color:rgb(76, 75, 75);
+    --primary-color:#E3F6FC;
+    --secondary-color:#6588DE;
+    --text-color:#52585D;
+    --text-color-light:#96A9BA;
+}
+#root{
+    display: flex;
+    position: relative;
+    width: 100vw;
 }

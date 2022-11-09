@@ -1,0 +1,17 @@
+.right-sidebar{
+  right: 0;
+  svg{
+    cursor: pointer;
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    display: none;
+
+  }
+}
+.right-sidebar.active{
+  background-color: var(--primary-color);
+  svg{
+    display: block;
+  }
+}

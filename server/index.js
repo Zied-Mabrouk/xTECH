@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const friendRoutes = require('./routes/friend.routes.js');
+const userRoutes = require('./routes/user.routes.js');
+const messageRoutes = require('./routes/message.routes.js');
 require('dotenv').config({ path: './config/.env' })
 require('./config/db');
 
@@ -23,10 +24,10 @@ const io = new Server(server,{
 });
 
 
-app.use("/friends",friendRoutes)
+app.use("/users",userRoutes)
+app.use("/messages",messageRoutes)
 
 io.on("connection", (socket) => {
-    console.log("New client connected"+socket.id);
     socket.on("send_message", (data)=>{
         socket.broadcast.emit("receive_message",data)
     })
