@@ -15,7 +15,10 @@ function App() {
   let [conversation, setConversation] = React.useState();
 
   // right side bar
-  let [displayBar, setDisplayBar] = React.useState(false);
+  let [displayBar, setDisplayBar] = React.useState({
+    open:false,
+    contact:null
+  });
 
   React.useEffect(() => {
     if (Math.random() > 0.5)
@@ -26,6 +29,9 @@ function App() {
   const handleOpenConversation = async (to) => {
     const tmp = await getConversation(user._id, to._id);
     setConversation({ messages: tmp, friend: to });
+  }
+  const handleOpenBar = (contact=null) => {
+    setDisplayBar({contact:contact,open:!displayBar.open});
   }
 
   let [list, setList] = React.useState([]);
@@ -39,14 +45,15 @@ function App() {
           setList={setList}
           selection={selection}
           setSelection={setSelection}
+          conversation={conversation}
         />
       </SideBar>
       {
         user &&
-        <MainContainer list={list} setList={setList} user={user} conversation={conversation} setConversation={setConversation} width={(displayBar ? 60 : 80) + "vw"} />
+        <MainContainer handleOpenBar={handleOpenBar} list={list} setList={setList} user={user} conversation={conversation} setConversation={setConversation} width={(displayBar.open ? 60 : 80) + "vw"} />
       }
-      <SideBar classname={"right-sidebar"} active={displayBar}>
-        <RightSideBar displayBar={displayBar} setDisplayBar={setDisplayBar} />
+      <SideBar classname={"right-sidebar"} active={displayBar.open}>
+        <RightSideBar  handleOpenBar={handleOpenBar} contact={displayBar.contact} />
       </SideBar>
 
     </UserContext.Provider>

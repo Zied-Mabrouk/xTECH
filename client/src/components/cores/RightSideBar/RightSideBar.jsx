@@ -1,17 +1,37 @@
 import React from "react";
+import { getStatus } from "../../../utils/GetStatus";
+import Status from "../Status/Status";
 import "./RightSideBar.scss";
 
-const RightSideBar = ({ setDisplayBar }) => {
+const RightSideBar = ({ handleOpenBar, contact }) => {
+  const status = getStatus(contact?.status.value);
   return (
     <>
-      
+      {contact && (
+        <>
+        <div className="right-sidebar-header">
+          <h1>Contact Info</h1>
+          <img src={contact.avatar} alt="" />
+          <div className="right-sidebar-header-info">
+            <h1>{contact.firstName +" "+ contact.lastName}</h1>
+            <h2> {contact.role} </h2>
+            <Status status={status} userStatus={contact.status} />
+          </div>
+        </div>
+        <div className="right-sidebar-media">
+          <h1>Media</h1>
+        </div>
+        </>
+      )}
+
       <svg
         width="24"
         height="24"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        onClick={() => setDisplayBar(false)}
+        onClick={handleOpenBar}
+        className={"toggler"}
       >
         <circle cx="12" cy="12" r="12" fill="#6588DE" />
         <path

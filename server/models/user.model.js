@@ -18,6 +18,18 @@ const userSchema = new mongoose.Schema({
         type:Array,
         required:true,
         default:[]
+    },
+    favorites:{
+        type:Array,
+        default:[]
+    },
+    status:{
+        type:Object,
+        default:{value:"offline",customMessage:""}
+    },
+    role:{
+        type:String,
+        required:true
     }
 });
 

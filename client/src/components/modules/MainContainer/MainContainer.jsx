@@ -2,6 +2,7 @@ import React from "react";
 import { sendMessage } from "../../../api";
 import "./MainContainer.scss";
 import io from "socket.io-client";
+import Message from "../../cores/Message/Message";
 
 const MainContainer = ({
   conversation,
@@ -10,6 +11,7 @@ const MainContainer = ({
   user,
   list,
   setList,
+  handleOpenBar
 }) => {
   let [message, setMessage] = React.useState({
     content: "",
@@ -18,17 +20,21 @@ const MainContainer = ({
   });
 
   let [socket, setSocket] = React.useState(io("http://localhost:5000"));
+  let [image, setImage] = React.useState({
+   content:[],
+   open:false 
+  });
 
   const onSend = async () => {
     const newMessage = {
       ...message,
       from: user?._id,
       to: conversation?.friend?._id,
-      date: new Date()
+      date: new Date(),
     };
     setConversation({
       ...conversation,
-      messages: [...conversation.messages, newMessage]
+      messages: [...conversation.messages, newMessage],
     });
 
     await sendMessage(newMessage);
@@ -63,38 +69,34 @@ const MainContainer = ({
         if (conversation && conversation.friend._id === data.from)
           setConversation({
             ...conversation,
-            messages: [...conversation.messages, data]
+            messages: [...conversation.messages, data],
           });
         setList(
           list.map((item) =>
-            item._id === data.from
-              ? { ...item, lastMessage: data }
-              : item
+            item._id === data.from ? { ...item, lastMessage: data } : item
           )
         );
       }
     });
-  }, [socket, user, conversation, setConversation,list,setList]);
+  }, [socket, user, conversation, setConversation, list, setList]);
   return (
     <div className="main-container" style={{ width: width }}>
       <div className="conversation">
         {conversation ? (
-          conversation?.messages?.map((m, index) => (
-            <div
-              key={index}
-              className={"message " + (m.from === user?._id ? "right" : "left")}
-            >
-              <img
-                src={
-                  m.from === user?._id
-                    ? user.avatar
-                    : conversation.friend.avatar
-                }
-                alt=""
-                className="message-sender"
-              />
-              <div className="message-content">{m.content}</div>
-            </div>
+          conversation?.messages?.map((m, key) => (
+            <Message
+              key={key}
+              handleOpenBar={handleOpenBar}
+              user={
+                key !== 0 && conversation.messages[key - 1].from === m.from
+                  ? null
+                  : m.from === user?._id
+                  ? user
+                  : conversation.friend
+              }
+              right={m.from === user?._id}
+              message={m}
+            />
           ))
         ) : (
           <div className="no-message">No message</div>
@@ -102,13 +104,18 @@ const MainContainer = ({
       </div>
       <div className="input-container">
         <div className="input">
-          <div className="input-tools">
+          <div className={"input-tools" + (conversation ? "" : " disabled")}>
+            {
+              image.open && <div className="drag-and-drop-zone">
+              </div>
+            }
             <svg
               width="18"
               height="20"
               viewBox="0 0 18 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              onClick={()=>setImage({...image,open:!image.open})}
             >
               <path
                 d="M15.5461 10.585L9.25481 16.8865C8.43003 17.6195 7.35637 18.0096 6.25343 17.9772C5.1505 17.9447 4.10164 17.4921 3.32141 16.7118C2.54118 15.9316 2.08854 14.8827 2.05607 13.7798C2.0236 12.6769 2.41376 11.6032 3.14675 10.7784L11.2908 2.63436C11.7771 2.17248 12.4221 1.91496 13.0927 1.91496C13.7633 1.91496 14.4084 2.17248 14.8946 2.63436C15.3683 3.11444 15.6339 3.76177 15.6339 4.43623C15.6339 5.1107 15.3683 5.75803 14.8946 6.23811L7.87031 13.2522C7.8008 13.3271 7.71721 13.3875 7.62434 13.4301C7.53146 13.4726 7.43112 13.4965 7.32902 13.5003C7.22693 13.504 7.12509 13.4877 7.02932 13.4521C6.93355 13.4165 6.84573 13.3624 6.77086 13.2929C6.696 13.2234 6.63556 13.1398 6.593 13.0469C6.55043 12.9541 6.52658 12.8537 6.5228 12.7516C6.51902 12.6495 6.53538 12.5477 6.57096 12.4519C6.60653 12.3562 6.66063 12.2683 6.73014 12.1935L11.9525 6.98126C12.1442 6.78956 12.2519 6.52957 12.2519 6.25847C12.2519 5.98737 12.1442 5.72738 11.9525 5.53568C11.7608 5.34399 11.5008 5.2363 11.2297 5.2363C10.9586 5.2363 10.6987 5.34399 10.507 5.53568L5.28457 10.7683C5.02325 11.0275 4.81584 11.336 4.6743 11.6758C4.53276 12.0157 4.45989 12.3802 4.45989 12.7483C4.45989 13.1164 4.53276 13.4809 4.6743 13.8207C4.81584 14.1606 5.02325 14.469 5.28457 14.7283C5.81839 15.2368 6.52736 15.5204 7.2646 15.5204C8.00183 15.5204 8.71081 15.2368 9.24463 14.7283L16.2587 7.70405C17.0679 6.83563 17.5084 5.68703 17.4875 4.50023C17.4666 3.31343 16.9858 2.18108 16.1465 1.34176C15.3071 0.502431 14.1748 0.0216535 12.988 0.000713708C11.8012 -0.020226 10.6526 0.420307 9.78417 1.2295L1.64009 9.37358C0.541863 10.5899 -0.0446844 12.1831 0.00265827 13.8212C0.0500009 15.4593 0.727583 17.016 1.89423 18.1669C3.06087 19.3178 4.62661 19.9742 6.2652 19.9993C7.9038 20.0243 9.48888 19.4162 10.6902 18.3015L16.9917 12.0102C17.0866 11.9153 17.1619 11.8026 17.2133 11.6786C17.2646 11.5546 17.2911 11.4217 17.2911 11.2874C17.2911 11.1532 17.2646 11.0203 17.2133 10.8963C17.1619 10.7723 17.0866 10.6596 16.9917 10.5647C16.8968 10.4697 16.7841 10.3944 16.6601 10.3431C16.536 10.2917 16.4031 10.2653 16.2689 10.2653C16.1347 10.2653 16.0017 10.2917 15.8777 10.3431C15.7537 10.3944 15.641 10.4697 15.5461 10.5647V10.585Z"
@@ -133,6 +140,9 @@ const MainContainer = ({
               type="text"
               placeholder="Type a new message..."
               value={message.content}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") onSend();
+              }}
               onChange={(e) =>
                 setMessage({
                   ...message,
@@ -142,7 +152,10 @@ const MainContainer = ({
               disabled={!conversation}
             />
           </div>
-          <div className="input-button" onClick={onSend}>
+          <div
+            className={"input-button" + (conversation ? "" : " disabled")}
+            onClick={onSend}
+          >
             <span>Send</span>
             <svg
               width="20"

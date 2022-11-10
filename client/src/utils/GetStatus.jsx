@@ -1,5 +1,5 @@
 export const getStatus = (status) => {
-  switch (status?.value) {
+  switch (status) {
     case 0:
       return "offline";
     case 1:
@@ -7,6 +7,6 @@ export const getStatus = (status) => {
     case 2:
       return "online";
     default:
-      return "offline";
+      return "null";
   }
 };

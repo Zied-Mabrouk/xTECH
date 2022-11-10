@@ -9,6 +9,9 @@
     --secondary-color:#6588DE;
     --text-color:#52585D;
     --text-color-light:#96A9BA;
+    --busy:#FF9B26;
+    --offline:#FF4D4D;
+    --online:#00C853;
 }
 #root{
     display: flex;

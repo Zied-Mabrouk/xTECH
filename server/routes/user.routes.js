@@ -27,7 +27,6 @@ router.post("/fetch-by-name", async (req, res) => {
     }
 });
 router.post("/friends", async (req, res) => {
-
     try {
         const { id } = req.body;
         let user = await UserModel.findById(id);
@@ -44,6 +43,28 @@ router.post("/friends", async (req, res) => {
             return friend;
         }))
         res.send(friends);
+    }
+    catch (err) {
+        res.status(500).json({ err: err });
+    }
+});
+router.post("/favorites", async (req, res) => {
+    try {
+        const { id } = req.body;
+        let user = await UserModel.findById(id);
+        if (user.favorites.length === 0)
+            res.status(500).json({ err: err })
+
+        let favorites = await Promise.all(user.favorites.map(async (friendId) => {
+            let friend = await UserModel.findById(friendId);
+            let lastMessage = await MessageModel
+            .find({ $or: [{ from: id, to: friend._id }, { from: friend._id, to: id }] })
+            .sort({ date: -1 });
+            lastMessage = lastMessage[0];
+            friend ={...friend._doc,lastMessage}
+            return friend;
+        }))
+        res.send(favorites);
     }
     catch (err) {
         res.status(500).json({ err: err });
