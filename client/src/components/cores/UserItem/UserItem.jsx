@@ -19,8 +19,9 @@ const UserItem = ({ user, handleOpenConversation,active }) => {
         <h1 className="user-item-name">
           {name}
         </h1>
+        {user?.lastMessage && 
         <p className="user-item-message">{ user.lastMessage.type ===0 ?user?.lastMessage?.content :
-        (user.lastMessage.from===user._id? name:"You ")+"sent an image"}</p>
+        (user.lastMessage.from===user._id? name:"You ")+"sent an image"}</p>}
       </div>
       </div>
       <div className="user-item-extra">

@@ -29,6 +29,7 @@ export const fetchUserByName = async (firstName,lastName)=>{
     const userURL = URL+"users/fetch-by-name"
     const res = await fetch(userURL,{
         method:"POST",
+        mode:'cors',
         headers:{
             "Content-Type":"application/json"
         },

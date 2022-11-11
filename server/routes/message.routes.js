@@ -4,9 +4,10 @@ const MessageModel = require('../models/message.model.js');
 
 
 router.post("/send", async (req, res) => {
-
+    let message = req.body;
+    
     try {
-        await MessageModel.create(req.body);
+        await MessageModel.create(message);
         res.sendStatus(200);
     }
     catch (err) {

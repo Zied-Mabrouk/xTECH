@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ImageMessage = ({images}) => {
-    console.log(images);
   return (
     <>
         {

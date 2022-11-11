@@ -4,7 +4,6 @@ import ImageMessage from "./ImageMessage";
 import "./Message.scss";
 
 const Message = ({ message, right, user,handleOpenBar }) => {
-  console.log(message);
   return (
     <div className={"message" + (right ? " right":"")}>
       {user ? <img onClick={()=>handleOpenBar(user)} src={user.avatar} alt="" className="message-sender" /> : <span className="seperator"></span>}

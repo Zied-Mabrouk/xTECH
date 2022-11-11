@@ -12,10 +12,13 @@ const {Server} = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
 
+app.use(bodyParser({limit:'50mb'}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors({origin:"*"}))
+
+
 const io = new Server(server,{
     cors: {
         origin: '*',

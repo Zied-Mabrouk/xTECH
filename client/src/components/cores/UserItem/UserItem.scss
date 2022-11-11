@@ -16,10 +16,10 @@
     cursor: pointer;
     .user-item-info {
       .user-item-name {
-        color: #fdfdfe;
+        color: #fdfdfe !important;
       }
       .user-item-message {
-        color: #f2f6f7;
+        color: #fdfdfe !important;
       }
     }
   }
@@ -93,10 +93,10 @@
   cursor: pointer;
   .user-item-info {
     .user-item-name {
-      color: #fdfdfe;
+      color: #fdfdfe !important;
     }
     .user-item-message {
-      color: #f2f6f7;
+      color: #fdfdfe !important;
     }
   }
 }
