@@ -4,7 +4,7 @@ import Status from "../Status/Status";
 import "./RightSideBar.scss";
 
 const RightSideBar = ({ handleOpenBar, contact }) => {
-  const status = getStatus(contact?.status.value);
+  const status = getStatus(contact?.status?.value);
   return (
     <>
       {contact && (

@@ -1,25 +1,19 @@
 .right-sidebar {
-  right: 0;
+  right: -100%;
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1{
+    color:var(--secondary-color);
+    font-size: 18px;
+  }
   .toggler {
     cursor: pointer;
     position: absolute;
     left: 16px;
     top: 16px;
     display: none;
-  }
-  
-}
-.right-sidebar.active {
-  background-color: var(--primary-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .toggler {
-    display: block;
-  }
-  h1{
-    color:var(--secondary-color);
-    font-size: 18px;
   }
   .right-sidebar-header {
     display: flex;
@@ -52,4 +46,15 @@
   .right-sidebar-media{
     padding-top: 32px;
   }
+  
+  
+}
+.right-sidebar.active {
+ 
+  right:0;
+  .toggler {
+    display: block;
+  }
+
+  
 }
