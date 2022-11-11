@@ -3,13 +3,13 @@ import React from "react"
 // import io from 'socket.io-client';
 import SideBar from './components/modules/SideBar/SideBar';
 import { UserContext } from './utils/UserContext';
-import { fetchUserByName, getConversation } from './api';
+import { fetchUserByName, getConversation, init } from './api';
 import LeftSideBar from './components/cores/LeftSideBar/LeftSideBar';
 import RightSideBar from './components/cores/RightSideBar/RightSideBar';
 import MainContainer from './components/modules/MainContainer/MainContainer';
 
 function App() {
-
+  init();
   let [selection, setSelection] = React.useState(0);
   let [user, setUser] = React.useState(null);
   let [conversation, setConversation] = React.useState();
@@ -28,6 +28,7 @@ function App() {
   }, [])
   const handleOpenConversation = async (to) => {
     const tmp = await getConversation(user._id, to._id);
+    setDisplayBar({open:false, contact:to});
     setConversation({ messages: tmp, friend: to });
   }
   const handleOpenBar = (contact=null) => {
@@ -53,7 +54,7 @@ function App() {
         <MainContainer handleOpenBar={handleOpenBar} list={list} setList={setList} user={user} conversation={conversation} setConversation={setConversation} width={(displayBar.open ? 60 : 80) + "vw"} />
       }
       <SideBar classname={"right-sidebar"} active={displayBar.open}>
-        <RightSideBar  handleOpenBar={handleOpenBar} contact={displayBar.contact} />
+        <RightSideBar  handleOpenBar={handleOpenBar} contact={displayBar.contact}/>
       </SideBar>
 
     </UserContext.Provider>

@@ -29,6 +29,7 @@ const io = new Server(server, {
 app.use("/users", userRoutes)
 app.use("/messages", messageRoutes)
 
+
 io.on("connection", (socket) => {
     socket.on("send_message", (data) => {
         socket.broadcast.emit("receive_message", data)

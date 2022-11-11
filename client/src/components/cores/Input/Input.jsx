@@ -61,12 +61,24 @@ const Input = ({
     );
     socket.emit("send_message", newMessage);
   };
+  const wrapperRef = React.createRef();
+  React.useEffect(() => {
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setDisplayDragAndDrop(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [displayDragAndDrop, wrapperRef]);
   return (
     <div className="input-container">
       <div className="input">
         <div className={"input-tools" + (conversation ? "" : " disabled")}>
           {displayDragAndDrop && conversation && (
-            <div className="drag-and-drop-zone">
+            <div className="drag-and-drop-zone" ref={wrapperRef}>
               {message.contentImages.map((item, index) => (
                 <div className="image" key={index}>
                   <img src={item} alt="uploaded-img" />

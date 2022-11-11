@@ -1,5 +1,10 @@
 const URL = "http://localhost:5000/"
 
+export const init = async ()=>{
+    const usersURL = URL+"users/init"
+    await fetch(usersURL)
+   
+}
 export const fetchFriends = async (id)=>{
     const usersURL = URL+"users/friends"
     const res = await fetch(usersURL,{
