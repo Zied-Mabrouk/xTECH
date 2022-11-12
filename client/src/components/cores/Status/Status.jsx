@@ -1,7 +1,16 @@
 import React from "react";
+import { updateStatus } from "../../../api";
+import { UserContext } from "../../../utils/UserContext";
 import "./Status.scss";
 
 const Status = ({ status, userStatus, icon }) => {
+  let [dropDown, setDropDown] = React.useState(false);
+  let {user,setUser} = React.useContext(UserContext);
+  const update = (value)=>{
+    updateStatus(user?._id,value);
+    setUser({...user,status:{...user.status,value:value}});
+
+  }
   return (
     <div className="status">
       <span
@@ -20,6 +29,7 @@ const Status = ({ status, userStatus, icon }) => {
           viewBox="0 0 10 6"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          onClick={() => setDropDown(!dropDown)}
         >
           <path
             fillRule="evenodd"
@@ -29,6 +39,24 @@ const Status = ({ status, userStatus, icon }) => {
           />
         </svg>
       )}
+      <div className={"status-dropdown" + (dropDown ? " active" : "")}>
+        {dropDown && (
+          <>
+            <div onClick={()=>update(2)}>
+              <span>online</span>
+              <span style={{backgroundColor:"var(--online)"}} ></span>
+            </div>
+            <div onClick={()=>update(1)}>
+              <span>busy</span>
+              <span style={{backgroundColor:"var(--busy)"}} ></span>
+            </div>
+            <div onClick={()=>update(0)}>
+              <span>offline</span>
+              <span style={{backgroundColor:"var(--offline)"}} ></span>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

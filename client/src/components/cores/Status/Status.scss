@@ -1,12 +1,18 @@
+@keyframes openDropDown {
+  from { height: 0; }
+  to { height: 100px; }
+}
+
 .status {
     display: flex;
     background-color: var(--secondary-color);
-    border-radius: 5px;
     border-radius: 14px;
     gap: 8px;
     align-items: center;
     padding: 4px 12px;
     cursor: pointer;
+    position: relative;
+    z-index: 1;
     .dot{
       width: 10px;
       height: 10px;
@@ -17,4 +23,41 @@
       color: white;
       text-transform: capitalize;
     }
+    .status-dropdown{
+      position: absolute;
+      left: 2px;
+      top: 24px;
+      width:calc(100% - 4px);
+      margin-inline:auto;
+      background-color: var(--secondary-color);
+      height: 0;
+      transition: height 400ms ease-in-out;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      color: white;
+      >div{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 8px;
+        justify-content: space-between;
+        &:hover{
+          background-color: var(--primary-color);
+          color: var(--secondary-color);
+        }
+        >span:nth-child(2){
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+        }
+      }
+    }
+    .status-dropdown.active{
+      height: fit-content;
+      padding: 4px;
+    }
+    
   }

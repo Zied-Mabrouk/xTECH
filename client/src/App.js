@@ -19,7 +19,6 @@ function App() {
     open:false,
     contact:null
   });
-  console.log(displayBar);
   React.useEffect(() => {
     // if (Math.random() > 0.5)
       fetchUserByName("Zied", "Mabrouk").then(data => setUser(data))
@@ -38,7 +37,7 @@ function App() {
   let [list, setList] = React.useState([]);
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={{user,setUser}}>
       <SideBar classname={"left-sidebar"} >
         <LeftSideBar
           handleOpenConversation={handleOpenConversation}

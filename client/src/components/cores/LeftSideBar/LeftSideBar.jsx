@@ -17,8 +17,7 @@ const LeftSideBar = ({
 }) => {
   // selction : [users (0), groups(1), favorites(2),search(3)]
 
-  const user = React.useContext(UserContext);
-
+  const {user} = React.useContext(UserContext);
   React.useEffect(() => {
     if (!user) return;
     setList([]);
@@ -49,7 +48,7 @@ const LeftSideBar = ({
             <h1 className="sidebar-header-profile-name">
               {user?.firstName + " " + user?.lastName}
             </h1>
-            <Status status={status} userStatus={user?.status} icon={true} />
+            <Status status={status} userStatus={user?.status} icon={true}/>
           </div>
         </div>
       </div>

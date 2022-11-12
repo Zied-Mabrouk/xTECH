@@ -68,3 +68,14 @@ export const getConversation = async (from,to)=>{
     return data;
 }
     
+export const updateStatus = async (id,status)=>{
+    const messageURL = URL+"users/update-status"
+    await fetch(messageURL,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({id,status})
+    })
+}
+    
