@@ -25,13 +25,13 @@ const UserItem = ({ user, handleOpenConversation,active }) => {
       </div>
       </div>
       <div className="user-item-extra">
+        <div className="user-item-status" style={{backgroundColor : "var(--"+status+")"}}></div>
         {
           user && user.lastMessage &&
           <span>
           {GetTime(user.lastMessage.date)}
         </span>
         }
-        <span className="user-item-status" style={{backgroundColor : "var(--"+status+")"}}></span>
       </div>
     </div>
   );

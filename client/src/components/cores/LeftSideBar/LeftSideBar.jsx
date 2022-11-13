@@ -19,8 +19,7 @@ const LeftSideBar = ({
 
   const {user} = React.useContext(UserContext);
   React.useEffect(() => {
-    if (!user) return;
-    setList([]);
+    if (!user?._id) return;
     switch (selection) {
       case 0:
         fetchFriends(user._id).then((data) => setList(data));
@@ -35,7 +34,7 @@ const LeftSideBar = ({
       default:
         fetchFriends(user._id).then((data) => setList(data));
     }
-  }, [selection, user, setList]);
+  }, [selection, user?._id, setList]);
   const status = getStatus(user?.status.value);
   return (
     <>

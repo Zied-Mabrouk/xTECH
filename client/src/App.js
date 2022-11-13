@@ -33,9 +33,7 @@ function App() {
   const handleOpenBar = (contact=null) => {
     setDisplayBar({contact:contact,open:!displayBar.open});
   }
-
   let [list, setList] = React.useState([]);
-
   return (
     <UserContext.Provider value={{user,setUser}}>
       <SideBar classname={"left-sidebar"} >

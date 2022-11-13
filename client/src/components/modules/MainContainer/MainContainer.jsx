@@ -14,7 +14,6 @@ const MainContainer = ({
   handleOpenBar,
 }) => {
   
-
   let [socket] = React.useState(io("http://localhost:5000"));
   
  

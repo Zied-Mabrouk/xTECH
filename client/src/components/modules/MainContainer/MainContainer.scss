@@ -13,3 +13,8 @@
   }
   
 }
+@media (max-width: 768px){
+  .main-container{
+    min-width: calc(80vw - 80px );
+  }
+}

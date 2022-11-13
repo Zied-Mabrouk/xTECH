@@ -9,7 +9,7 @@ const Status = ({ status, userStatus, icon }) => {
   const update = (value)=>{
     updateStatus(user?._id,value);
     setUser({...user,status:{...user.status,value:value}});
-
+    setDropDown(false);
   }
   return (
     <div className="status">
