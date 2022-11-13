@@ -3,6 +3,7 @@ import "./MainContainer.scss";
 import io from "socket.io-client";
 import Message from "../../cores/Message/Message";
 import Input from "../../cores/Input/Input";
+import Carousel from "../../cores/Carousel/Carousel";
 
 const MainContainer = ({
   conversation,
@@ -13,10 +14,13 @@ const MainContainer = ({
   setList,
   handleOpenBar,
 }) => {
-  
   let [socket] = React.useState(io("http://localhost:5000"));
-  
- 
+  let [carousel, setCarousel] = React.useState({
+    open:false,
+    selected:null
+  });
+
+  const images = conversation?.messages.filter((message) => message.type === 1).map((message) => message.content).flat(1);
   React.useEffect(() => {
     socket.on("receive_message", (data) => {
       if (!data) return;
@@ -38,7 +42,7 @@ const MainContainer = ({
             ...conversation,
             messages: [...conversation.messages, data],
           });
-          //update the last Message on the left Bar
+        //update the last Message on the left Bar
         setList(
           list.map((item) =>
             item._id === data.from ? { ...item, lastMessage: data } : item
@@ -65,6 +69,8 @@ const MainContainer = ({
               }
               right={m.from === user?._id}
               message={m}
+              setCarousel={setCarousel}
+              carousel={carousel}
             />
           ))
         ) : (
@@ -80,6 +86,7 @@ const MainContainer = ({
         socket={socket}
         user={user}
       />
+      {carousel.open && <Carousel images={images} carousel={carousel} setCarousel={setCarousel} />}
     </div>
   );
 };

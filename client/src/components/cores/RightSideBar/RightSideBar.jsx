@@ -3,24 +3,31 @@ import { getStatus } from "../../../utils/GetStatus";
 import Status from "../Status/Status";
 import "./RightSideBar.scss";
 
-const RightSideBar = ({ handleOpenBar, contact }) => {
+const RightSideBar = ({ handleOpenBar, contact, conversation }) => {
   const status = getStatus(contact?.status?.value);
   return (
     <>
       {contact && (
         <>
-        <div className="right-sidebar-header">
-          <h1>Contact Info</h1>
-          <img src={contact.avatar} alt="" />
-          <div className="right-sidebar-header-info">
-            <h1>{contact.firstName +" "+ contact.lastName}</h1>
-            <h2> {contact.role} </h2>
-            <Status status={status} userStatus={contact.status} />
+          <div className="right-sidebar-header">
+            <h1>Contact Info</h1>
+            <img src={contact.avatar} alt="" />
+            <div className="right-sidebar-header-info">
+              <h1>{contact.firstName + " " + contact.lastName}</h1>
+              <h2> {contact.role} </h2>
+              <Status status={status} userStatus={contact.status} />
+            </div>
           </div>
-        </div>
-        <div className="right-sidebar-media">
-          <h1>Media</h1>
-        </div>
+          <div className="right-sidebar-media">
+            <h1>Media</h1>
+            <div className="right-sidebar-media-content">
+              {conversation?.messages
+                ?.filter((m) => m.type === 1)
+                .map((m, index) =>
+                  m.content.map((msg,key) => <img src={msg} alt="" key={index+"-"+key} />)
+                )}
+            </div>
+          </div>
         </>
       )}
 

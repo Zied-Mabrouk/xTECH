@@ -1,11 +1,14 @@
 import React from 'react'
 
-const ImageMessage = ({images}) => {
+const ImageMessage = ({images,setCarousel}) => {
+  const handleOnClick = (img) => {
+    setCarousel({open:true,selected:img})
+  };
   return (
     <>
         {
             images.map((image,index) => (
-                <img key={index} src={image} alt='' />
+                <img key={index} src={image} onClick={()=>handleOnClick(image)} alt='' />
             ))
         }
     </>

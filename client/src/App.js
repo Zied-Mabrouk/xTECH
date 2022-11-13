@@ -51,7 +51,7 @@ function App() {
         <MainContainer handleOpenBar={handleOpenBar} list={list} setList={setList} user={user} conversation={conversation} setConversation={setConversation} width={(displayBar.open ? 60 : 80) + "vw"} />
       }
       <SideBar classname={"right-sidebar"} active={displayBar.open}>
-        <RightSideBar  handleOpenBar={handleOpenBar} contact={displayBar.contact}/>
+        <RightSideBar  handleOpenBar={handleOpenBar} contact={displayBar.contact} conversation={conversation}/>
       </SideBar>
 
     </UserContext.Provider>

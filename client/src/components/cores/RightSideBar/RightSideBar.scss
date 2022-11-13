@@ -44,6 +44,26 @@
   }
   .right-sidebar-media {
     padding-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-inline: 10%;
+    h1 {
+      text-align: center;
+      width: 100%;
+    }
+    .right-sidebar-media-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5%;
+      img {
+        width: 30%;
+        min-width: 80px;
+        border-radius: 10px;
+        box-shadow: 0 0 5px black;
+        margin-bottom: 8px;
+      }
+    }
   }
 }
 .right-sidebar.active {
@@ -59,14 +79,14 @@
       font-size: 12px;
       text-align: center;
     }
-    .right-sidebar-header .right-sidebar-header-info > h2{
+    .right-sidebar-header .right-sidebar-header-info > h2 {
       font-size: 10px;
     }
   }
 }
 
-@media (max-width: 425px){
-  .right-sidebar.active{
+@media (max-width: 425px) {
+  .right-sidebar.active {
     position: fixed;
     width: 100%;
   }
