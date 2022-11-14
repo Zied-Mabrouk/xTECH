@@ -44,6 +44,7 @@ function App() {
           selection={selection}
           setSelection={setSelection}
           conversation={conversation}
+          setConversation={setConversation}
         />
       </SideBar>
       {

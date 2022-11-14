@@ -13,7 +13,8 @@ const LeftSideBar = ({
   setList,
   selection,
   setSelection,
-  conversation
+  conversation,
+  setConversation
 }) => {
 
   
@@ -63,7 +64,10 @@ const LeftSideBar = ({
 
             <div className="switch-acount-dropdown">
               {users.map((user,index)=>(
-                <div key={index} className="switch-acount-dropdown-item" onClick={()=>setUser(user)}>
+                <div key={index} className="switch-acount-dropdown-item" onClick={()=>{
+                  setUser(user);
+                  setConversation(null);
+                }}>
                   {user.firstName + " " + user.lastName}
                   </div>
               )
