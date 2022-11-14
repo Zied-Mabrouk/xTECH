@@ -19,6 +19,7 @@ const LeftSideBar = ({
 
   
   const {user,setUser} = React.useContext(UserContext);
+  let [switchAccount,setSwitchAccount] = React.useState(false);
   let [users,setUsers] = React.useState([]);
   React.useEffect(()=>{
     fetchUsers().then((data)=>{
@@ -41,9 +42,8 @@ const LeftSideBar = ({
       default:
         fetchFriends(user._id).then((data) => setList(data));
     }
-  }, [selection, user?._id, setList]);
+  }, [selection, user?._id, setList,switchAccount]);
   const status = getStatus(user?.status.value);
-  let [switchAccount,setSwitchAccount] = React.useState(false);
   return (
     <>
       <div className="sidebar-header">
