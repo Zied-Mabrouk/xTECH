@@ -11,7 +11,7 @@
   &:hover {
     background-color: var(--secondary-color);
     transition: transform 200ms ease-in-out;
-    transform: translateX(2px);
+    transform: translateX(4px);
     box-shadow: 0px 8px 40px rgba(0, 72, 251, 0.3);
     cursor: pointer;
     .user-item-info {
@@ -21,6 +21,9 @@
       .user-item-message {
         color: #fdfdfe !important;
       }
+    }
+    .user-item-extra span{
+      color: #fdfdfe !important;
     }
   }
   .user-item-group {
@@ -98,6 +101,9 @@
     .user-item-message {
       color: #fdfdfe !important;
     }
+  }
+  .user-item-extra span{
+    color: #fdfdfe !important;
   }
 }
 @media (max-width: 1024px) {

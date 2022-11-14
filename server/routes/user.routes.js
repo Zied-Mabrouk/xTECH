@@ -19,6 +19,17 @@ router.get("/init", async (req, res) => {
     }
 });
 
+router.post("/", async (req, res) => {
+
+    try {
+
+        let users = await UserModel.find({});
+        res.send(users);
+    }
+    catch (err) {
+        res.status(500).json({ err: err });
+    }
+});
 router.post("/fetch-by-name", async (req, res) => {
 
     try {

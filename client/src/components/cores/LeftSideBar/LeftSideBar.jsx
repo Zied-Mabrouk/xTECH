@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchFavorites, fetchFriends } from "../../../api";
+import { fetchFavorites, fetchFriends, fetchUserByName, fetchUsers } from "../../../api";
 import { navIcons } from "../../../utils/NavIcons";
 import UserItem from "../UserItem/UserItem";
 import "./LeftSideBar.scss";
@@ -15,9 +15,15 @@ const LeftSideBar = ({
   setSelection,
   conversation
 }) => {
-  // selction : [users (0), groups(1), favorites(2),search(3)]
 
-  const {user} = React.useContext(UserContext);
+  
+  const {user,setUser} = React.useContext(UserContext);
+  let [users,setUsers] = React.useState([]);
+  React.useEffect(()=>{
+    fetchUsers().then((data)=>{
+      setUsers(data);
+    });
+  },[])
   React.useEffect(() => {
     if (!user?._id) return;
     switch (selection) {
@@ -36,6 +42,7 @@ const LeftSideBar = ({
     }
   }, [selection, user?._id, setList]);
   const status = getStatus(user?.status.value);
+  let [switchAccount,setSwitchAccount] = React.useState(false);
   return (
     <>
       <div className="sidebar-header">
@@ -48,6 +55,21 @@ const LeftSideBar = ({
               {user?.firstName + " " + user?.lastName}
             </h1>
             <Status status={status} userStatus={user?.status} icon={true}/>
+          </div>
+          <div className="switch-account">
+            <img src="./switch.png" alt="" onClick={()=>setSwitchAccount(!switchAccount)} />
+            {
+            switchAccount &&
+
+            <div className="switch-acount-dropdown">
+              {users.map((user,index)=>(
+                <div key={index} className="switch-acount-dropdown-item" onClick={()=>setUser(user)}>
+                  {user.firstName + " " + user.lastName}
+                  </div>
+              )
+              )}
+            </div>
+            }
           </div>
         </div>
       </div>

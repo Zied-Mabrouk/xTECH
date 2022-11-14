@@ -44,6 +44,35 @@
           overflow: hidden;
         }
       }
+      .switch-account{
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        position: relative;
+        .switch-acount-dropdown{
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          position: absolute;
+          padding-block: 8px;
+          top:100%;
+          z-index: 9;
+          background-color: var(--primary-color);
+          box-shadow: 0 0 3px black;
+          .switch-acount-dropdown-item{
+            width: 200px;
+            cursor: pointer;
+            padding: 4px 8px;
+            &:hover{
+              background-color: var(--secondary-color);
+              color: white;
+            }
+          }
+        }
+        img{
+          cursor: pointer;
+        }
+      }
       .sidebar-header-profile-avatar {
         height: 40px;
         img {

@@ -17,6 +17,18 @@ export const fetchFriends = async (id)=>{
     const data = await res.json()
     return data;
 }
+export const fetchUsers = async (id)=>{
+    const usersURL = URL+"users/"
+    const res = await fetch(usersURL,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({id})
+    })
+    const data = await res.json()
+    return data;
+}
 export const fetchFavorites = async (id)=>{
     const usersURL = URL+"users/favorites"
     const res = await fetch(usersURL,{
