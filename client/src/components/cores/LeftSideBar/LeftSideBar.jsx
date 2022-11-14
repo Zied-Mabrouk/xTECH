@@ -67,6 +67,7 @@ const LeftSideBar = ({
                 <div key={index} className="switch-acount-dropdown-item" onClick={()=>{
                   setUser(user);
                   setConversation(null);
+                  setSwitchAccount(false);
                 }}>
                   {user.firstName + " " + user.lastName}
                   </div>
@@ -79,7 +80,7 @@ const LeftSideBar = ({
       </div>
 
       <div className="sidebar-content">
-        {list && list.sort((a,b)=>new Date(b.lastMessage?.date) - new Date(a.lastMessage?.date)).map((u, key) => (
+        {list && list.filter(friend=>friend.lastMessage).sort((a,b)=>b.lastMessage && (new Date(b.lastMessage?.date) - new Date(a.lastMessage?.date))).map((u, key) => (
           <UserItem
             user={u}
             key={key}
@@ -87,6 +88,15 @@ const LeftSideBar = ({
             active={conversation && conversation.friend._id === u._id}
           />
         ))}
+        {list && list.filter(friend=>!friend.lastMessage).map((u, key) => (
+          <UserItem
+            user={u}
+            key={key}
+            handleOpenConversation={handleOpenConversation}
+            active={conversation && conversation.friend._id === u._id}
+          />
+        ))}
+        
       </div>
       <div className="sidebar-nav">
         {navIcons.map((icon, key) => (
