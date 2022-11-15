@@ -14,44 +14,70 @@ const MainContainer = ({
   setList,
   handleOpenBar,
 }) => {
-  let [socket] = React.useState(io("http://localhost:5000"));
+  let [socket, setSocket] = React.useState(null);
+  let [dataSocket, setDataSocket] = React.useState();
   let [carousel, setCarousel] = React.useState({
-    open:false,
-    selected:null
+    open: false,
+    selected: null,
   });
 
-  const images = conversation?.messages.filter((message) => message.type === 1).map((message) => message.content).flat(1);
-  React.useEffect(() => {
-    socket.on("receive_message", (data) => {
-      if (!data) return;
-      if (!user) return;
+  const images = conversation?.messages
+    .filter((message) => message.type === 1)
+    .map((message) => message.content)
+    .flat(1);
 
-      // if this session's user is the sender of the message
-      if (data.from === user._id) {
-        setConversation({
-          ...conversation,
-          messages: [...conversation?.messages, data],
-        });
-        return;
-      }
-      // if this session's user is the receiver of the message
-      if (data.to === user?._id) {
-        //if the conversation is already opened, update the conversation
-        if (conversation && conversation.friend._id === data.from)
-          setConversation({
-            ...conversation,
-            messages: [...conversation.messages, data],
-          });
-        //update the last Message on the left Bar
-        setList(
-          list.map((item) =>
-            item._id === data.from ? { ...item, lastMessage: data } : item
-          )
-        );
-      }
+  React.useEffect(() => {
+    if (!dataSocket) return;
+    if (!user?._id) return;
+    // if this session's user is the sender of the message
+    if (dataSocket.from === user._id) {
+      setConversation(prev=>(
+        {
+          ...prev,
+          messages: [...prev?.messages, dataSocket],
+        }
+      ));
+      return;
+    }
+    // if this session's user is the receiver of the message
+    if (dataSocket.to === user?._id) {
+      //if the conversation is already opened, update the conversation
+
+      setConversation((prev) => {
+        if (prev && prev.friend._id === dataSocket.from)
+          return {
+            ...prev,
+            messages: [...prev.messages, dataSocket],
+          };
+        else return prev;
+      });
+      //update the last Message on the left Bar
+      setList((prev) =>
+        prev.map((item) =>
+          item._id === dataSocket.from
+            ? { ...item, lastMessage: dataSocket }
+            : item
+        )
+      );
+    }
+  }, [dataSocket, user, setConversation, setList]);
+
+  React.useEffect(() => {
+    const newSocket = io("http://localhost:5000");
+    newSocket.on("receive_message", (data) => {
+      setDataSocket(data);
     });
-    return ()=>socket.off("receive_message");
-  }, [socket, user, conversation, setConversation, list, setList]);
+    setSocket(newSocket);
+    
+    return () =>{
+      setSocket((prev) => {
+        prev.disconnect();
+        return (prev.removeAllListeners("receive_message"))
+      });
+    }
+  }, [user]);
+
+
 
   return (
     <div className="main-container" style={{ width: width }}>
@@ -87,7 +113,13 @@ const MainContainer = ({
         socket={socket}
         user={user}
       />
-      {carousel.open && <Carousel images={images} carousel={carousel} setCarousel={setCarousel} />}
+      {carousel.open && (
+        <Carousel
+          images={images}
+          carousel={carousel}
+          setCarousel={setCarousel}
+        />
+      )}
     </div>
   );
 };

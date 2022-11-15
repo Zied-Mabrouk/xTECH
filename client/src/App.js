@@ -24,7 +24,7 @@ function App() {
     if(user) return;
       fetchUserByName("Zied", "Mabrouk").then(data => setUser(data))
       
-  }, [])
+  }, [user])
   const handleOpenConversation = async (to) => {
     const tmp = await getConversation(user._id, to._id);
     setDisplayBar({open:false, contact:to});

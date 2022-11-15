@@ -57,14 +57,13 @@ export const fetchUserByName = async (firstName,lastName)=>{
 }
 export const sendMessage = async (message)=>{
     const messageURL = URL+"messages/send"
-    const res = await fetch(messageURL,{
+    await fetch(messageURL,{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
         },
         body:JSON.stringify(message)
     })
-    console.log(res);
 }
     
 export const getConversation = async (from,to)=>{

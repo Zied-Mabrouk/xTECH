@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchFavorites, fetchFriends, fetchUserByName, fetchUsers } from "../../../api";
+import { fetchFavorites, fetchFriends, fetchUsers } from "../../../api";
 import { navIcons } from "../../../utils/NavIcons";
 import UserItem from "../UserItem/UserItem";
 import "./LeftSideBar.scss";
