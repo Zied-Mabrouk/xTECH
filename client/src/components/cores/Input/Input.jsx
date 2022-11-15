@@ -2,6 +2,7 @@ import React from "react";
 import "./Input.scss";
 import { FileUploader } from "react-drag-drop-files";
 import { sendMessage } from "../../../api";
+import EmojiPicker from 'emoji-picker-react';
 
 const Input = ({
   conversation,
@@ -12,6 +13,7 @@ const Input = ({
   socket,
 }) => {
   let [displayDragAndDrop, setDisplayDragAndDrop] = React.useState(false);
+  let [displayEmojis, setDisplayEmojis] = React.useState(false);
   let [message, setMessage] = React.useState({
     content: "",
     contentImages: [],
@@ -50,6 +52,7 @@ const Input = ({
       type: 0,
     });
     setDisplayDragAndDrop(false);
+    setDisplayEmojis(false);
     setList(
       list.map((item) =>
         item._id === conversation.friend._id
@@ -123,6 +126,16 @@ const Input = ({
               fill="#6588DE"
             />
           </svg>
+          {
+            displayEmojis&&
+          <EmojiPicker onEmojiClick={(e)=>setMessage({...message,content:message.content+e.emoji})}  />
+          }
+          <span className={"emoji-trigger"+(conversation?"":" disabled")} onClick={()=>{
+            if(conversation)
+              setDisplayEmojis(!displayEmojis)
+          }}>
+          &#128540;
+          </span>
         </div>
         <div className="input-text">
           <input
