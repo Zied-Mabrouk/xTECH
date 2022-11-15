@@ -113,8 +113,12 @@
   }
 }
 @media (max-width: 768px) {
+  
   .left-sidebar {
     width:fit-content !important;
+    .switch-account{
+      display: none !important;
+    }
     .sidebar-header {
       .sidebar-header-profile {
         .sidebar-header-profile-info{
