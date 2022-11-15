@@ -30,7 +30,7 @@ const MainContainer = ({
       if (data.from === user._id) {
         setConversation({
           ...conversation,
-          messages: [...conversation.messages, data],
+          messages: [...conversation?.messages, data],
         });
         return;
       }
@@ -50,6 +50,7 @@ const MainContainer = ({
         );
       }
     });
+    return ()=>socket.off("receive_message");
   }, [socket, user, conversation, setConversation, list, setList]);
 
   return (

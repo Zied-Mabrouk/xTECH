@@ -51,7 +51,6 @@ const Input = ({
       type: 0,
     });
     setDisplayDragAndDrop(false);
-    // console.log(conversation);
     setList(
       list.map((item) =>
         item._id === conversation.friend._id

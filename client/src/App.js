@@ -20,10 +20,9 @@ function App() {
     contact:null
   });
   React.useEffect(() => {
-    // if (Math.random() > 0.5)
+    if(user) return;
       fetchUserByName("Zied", "Mabrouk").then(data => setUser(data))
-    // else
-    //   fetchUserByName("Amine", "Saddem").then(data => setUser(data))
+      
   }, [])
   const handleOpenConversation = async (to) => {
     const tmp = await getConversation(user._id, to._id);
