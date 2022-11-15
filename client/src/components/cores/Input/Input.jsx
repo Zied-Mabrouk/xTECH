@@ -42,7 +42,6 @@ const Input = ({
       ...conversation,
       messages: [...conversation.messages, newMessage],
     });
-
     await sendMessage(newMessage);
     setMessage({
       content: type === 0 ? "" : message.content,

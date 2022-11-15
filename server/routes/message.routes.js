@@ -2,15 +2,15 @@ const router = require('express').Router();
 const MessageModel = require('../models/message.model.js');
 
 
-
+let i=0;
 router.post("/send", async (req, res) => {
     let message = req.body;
-    
     try {
         await MessageModel.create(message);
-        res.sendStatus(200);
+        res.status(200).send({result:"Successfully got Response"})
     }
     catch (err) {
+        console.log("erreur");
         res.status(500).json({ err: err });
     }
 });

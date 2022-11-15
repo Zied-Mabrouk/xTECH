@@ -9,7 +9,7 @@ import RightSideBar from './components/cores/RightSideBar/RightSideBar';
 import MainContainer from './components/modules/MainContainer/MainContainer';
 
 function App() {
-  init();
+  
   let [selection, setSelection] = React.useState(0);
   let [user, setUser] = React.useState(null);
   let [conversation, setConversation] = React.useState();
@@ -20,6 +20,7 @@ function App() {
     contact:null
   });
   React.useEffect(() => {
+    init();
     if(user) return;
       fetchUserByName("Zied", "Mabrouk").then(data => setUser(data))
       
