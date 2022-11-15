@@ -13,6 +13,10 @@ function App() {
   let [selection, setSelection] = React.useState(0);
   let [user, setUser] = React.useState(null);
   let [conversation, setConversation] = React.useState();
+  let [carousel, setCarousel] = React.useState({
+    open: false,
+    selected: null,
+  });
 
   // right side bar
   let [displayBar, setDisplayBar] = React.useState({
@@ -49,10 +53,10 @@ function App() {
       </SideBar>
       {
         user &&
-        <MainContainer handleOpenBar={handleOpenBar} list={list} setList={setList} user={user} conversation={conversation} setConversation={setConversation} width={(displayBar.open ? 60 : 80) + "vw"} />
+        <MainContainer carousel={carousel} setCarousel={setCarousel} handleOpenBar={handleOpenBar} list={list} setList={setList} user={user} conversation={conversation} setConversation={setConversation} width={(displayBar.open ? 60 : 80) + "vw"} />
       }
       <SideBar classname={"right-sidebar"} active={displayBar.open}>
-        <RightSideBar  handleOpenBar={handleOpenBar} contact={displayBar.contact} conversation={conversation}/>
+        <RightSideBar setCarousel={setCarousel}   handleOpenBar={handleOpenBar} contact={displayBar.contact} conversation={conversation}/>
       </SideBar>
 
     </UserContext.Provider>

@@ -3,7 +3,7 @@ import { getStatus } from "../../../utils/GetStatus";
 import Status from "../Status/Status";
 import "./RightSideBar.scss";
 
-const RightSideBar = ({ handleOpenBar, contact, conversation }) => {
+const RightSideBar = ({ handleOpenBar, contact, conversation,setCarousel}) => {
   const status = getStatus(contact?.status?.value);
   return (
     <>
@@ -24,7 +24,7 @@ const RightSideBar = ({ handleOpenBar, contact, conversation }) => {
               {conversation?.messages
                 ?.filter((m) => m.type === 1)
                 .map((m, index) =>
-                  m.content.map((msg,key) => <img src={msg} alt="" key={index+"-"+key} />)
+                  m.content.map((msg,key) => <img src={msg} onClick={()=>setCarousel({open:true,selected:msg})} alt="" key={index+"-"+key} />)
                 )}
             </div>
           </div>

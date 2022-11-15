@@ -8,6 +8,9 @@
     color: var(--secondary-color);
     font-size: 18px;
   }
+  .status{
+    z-index: 0;
+  }
   .toggler {
     cursor: pointer;
     position: absolute;
@@ -62,6 +65,7 @@
         border-radius: 10px;
         box-shadow: 0 0 5px black;
         margin-bottom: 8px;
+        cursor: pointer;
       }
     }
   }

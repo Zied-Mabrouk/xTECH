@@ -13,13 +13,11 @@ const MainContainer = ({
   list,
   setList,
   handleOpenBar,
+  carousel, setCarousel
 }) => {
   let [socket, setSocket] = React.useState(null);
   let [dataSocket, setDataSocket] = React.useState();
-  let [carousel, setCarousel] = React.useState({
-    open: false,
-    selected: null,
-  });
+  
 
   const images = conversation?.messages
     .filter((message) => message.type === 1)
