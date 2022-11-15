@@ -57,13 +57,15 @@ export const fetchUserByName = async (firstName,lastName)=>{
 }
 export const sendMessage = async (message)=>{
     const messageURL = URL+"messages/send"
-    await fetch(messageURL,{
+    const res = await fetch(messageURL,{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
         },
         body:JSON.stringify(message)
     })
+    const data = await res.json()
+    return data;
 }
     
 export const getConversation = async (from,to)=>{
@@ -87,6 +89,17 @@ export const updateStatus = async (id,status)=>{
             "Content-Type":"application/json"
         },
         body:JSON.stringify({id,status})
+    })
+}
+    
+export const removeMessage = async (id)=>{
+    const messageURL = URL+"messages/remove"
+    await fetch(messageURL,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({id})
     })
 }
     

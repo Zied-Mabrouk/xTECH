@@ -40,11 +40,11 @@ const Input = ({
       type: type,
     };
     delete newMessage.contentImages;
+    const newConversation = await sendMessage(newMessage);
     setConversation({
       ...conversation,
-      messages: [...conversation.messages, newMessage],
+      messages: newConversation,
     });
-    await sendMessage(newMessage);
     setMessage({
       content: type === 0 ? "" : message.content,
       contentImages: [],

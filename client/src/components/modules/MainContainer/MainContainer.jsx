@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import Message from "../../cores/Message/Message";
 import Input from "../../cores/Input/Input";
 import Carousel from "../../cores/Carousel/Carousel";
+import ContextMenu from "../../cores/ContextMenu/ContextMenu";
 
 const MainContainer = ({
   conversation,
@@ -17,6 +18,7 @@ const MainContainer = ({
 }) => {
   let [socket, setSocket] = React.useState(null);
   let [dataSocket, setDataSocket] = React.useState();
+  let [contextMenu, setContextMenu] = React.useState({user:user._id,open:false,styles:{} });
   
 
   const images = conversation?.messages
@@ -66,7 +68,7 @@ const MainContainer = ({
       setDataSocket(data);
     });
     setSocket(newSocket);
-    
+    setContextMenu((prev)=>({...prev,user:user._id}));
     return () =>{
       setSocket((prev) => {
         prev.disconnect();
@@ -78,19 +80,32 @@ const MainContainer = ({
 
 
   return (
-    <div className="main-container" style={{ width: width }}>
+    <div className="main-container" style={{ width: width }} onContextMenu={(e)=>e.preventDefault()}>
       <div className="conversation">
+        {
+          contextMenu.open &&
+          <ContextMenu 
+          contextMenu={contextMenu} 
+          setContextMenu={setContextMenu}
+           setConversation={setConversation} 
+           setList={setList}
+           />
+        }
         {conversation ? (
           conversation?.messages?.map((m, key) => (
             <Message
               key={key}
+              setContextMenu={setContextMenu}
               handleOpenBar={handleOpenBar}
               user={
-                key !== 0 && conversation.messages[key - 1].from === m.from
-                  ? null
-                  : m.from === user?._id
+                 m.from === user?._id
                   ? user
                   : conversation.friend
+              }
+              displayAvatar={
+                key !== 0 && conversation.messages[key - 1].from === m.from
+                  ? false
+                  : true
               }
               right={m.from === user?._id}
               message={m}

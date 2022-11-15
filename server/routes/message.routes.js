@@ -7,7 +7,10 @@ router.post("/send", async (req, res) => {
     let message = req.body;
     try {
         await MessageModel.create(message);
-        res.status(200).send({result:"Successfully got Response"})
+        const {to,from} = message;
+        const conversation = await MessageModel.find({ $or: [{ from, to }, { from: to, to: from }] })
+        conversation.sort((a, b) => a.date -b.date);
+        res.send(conversation);
     }
     catch (err) {
         console.log("erreur");
@@ -21,6 +24,17 @@ router.post("/get-conversation", async (req, res) => {
         const conversation = await MessageModel.find({ $or: [{ from, to }, { from: to, to: from }] })
         conversation.sort((a, b) => a.date -b.date);
         res.send(conversation);
+    }
+    catch (err) {
+        res.status(500).json({ err: err });
+    }
+});
+
+router.post("/remove", async (req, res) => {
+    const { id } = req.body;
+    try {
+        await MessageModel.deleteOne({ _id: id });
+        res.sendStatus(200)
     }
     catch (err) {
         res.status(500).json({ err: err });
