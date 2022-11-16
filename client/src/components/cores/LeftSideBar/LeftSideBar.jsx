@@ -33,11 +33,13 @@ const LeftSideBar = ({
         fetchFriends(user._id).then((data) => setList(data));
         break;
       case 1:
+        setList([])
         break;
       case 2:
         fetchFavorites(user._id).then((data) => setList(data));
         break;
       case 3:
+        setList([])
         break;
       default:
         fetchFriends(user._id).then((data) => setList(data));
