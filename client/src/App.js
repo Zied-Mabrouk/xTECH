@@ -35,6 +35,7 @@ function App() {
     setConversation({ messages: tmp, friend: to });
   }
   const handleOpenBar = (contact=null) => {
+    if(!contact || contact._id === user._id) return;
     setDisplayBar({contact:contact,open:!displayBar.open});
   }
   let [list, setList] = React.useState([]);
