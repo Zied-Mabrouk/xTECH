@@ -13,7 +13,6 @@ router.post("/send", async (req, res) => {
         res.send(conversation);
     }
     catch (err) {
-        console.log("erreur");
         res.status(500).json({ err: err });
     }
 });

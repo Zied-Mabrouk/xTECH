@@ -10,10 +10,7 @@ const messageSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
-    targetType:{
-        type:Number,
-        required:true
-    },
+   
     from:{
         type:String,
         required:true

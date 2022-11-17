@@ -37,6 +37,10 @@
       object-fit: cover;
     }
   }
+  .message-content-vocal{
+    max-width: fit-content;
+    
+  }
 }
 .message.right {
   flex-direction: row-reverse;

@@ -1,0 +1,30 @@
+.voice-recorder
+{
+    display: flex;
+    cursor: pointer;
+    &-ui{
+
+        width: 70vw;
+        height: 100px;
+        background-color: var(--secondary-color);
+        position: absolute;
+        top: -108px;
+        left: 0;
+        border-radius: 8px;
+        display: flex;
+        padding: 5px;
+        align-items: center;
+        gap: 5px;
+        justify-content: center;
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 44px;
+            width: 10px;
+            height: 10px;
+            transform: rotate(45deg);
+            background-color: var(--secondary-color);
+          }
+    }
+}

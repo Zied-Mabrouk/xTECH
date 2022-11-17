@@ -1,0 +1,93 @@
+.controls-container {
+  height: 15%;
+  display: flex;
+  padding: 0.5rem;
+  width: 30%;
+}
+
+.recorder-display {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  gap: 8px;
+}
+
+@keyframes animated-block {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.recording-indicator {
+  width: 10px;
+  height: 10px;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  
+}
+.recording-indicator.active{
+  background-color: #db0808;
+  animation-name: animated-block;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.recording-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-button-container {
+  display: flex;
+  animation-name: animated-block;
+  animation-duration: 2s;
+  width: 25px;
+  height: 25px;
+}
+.cancel-button-container.active .cancel-button{
+    background-color: transparent;
+}
+
+.start-button,
+.cancel-button {
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  color: #fd1c03;
+}
+
+.cancel-button {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-button-container {
+  width: 15%;
+  display: grid;
+  place-content: center;
+}
+
+.start-button:hover {
+  color: #41295a;
+  background-color: #f2ea02;
+}
+
+.start-button {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

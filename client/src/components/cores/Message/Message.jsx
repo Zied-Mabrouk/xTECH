@@ -48,7 +48,9 @@ const Message = ({
         ) : message.type === 1 ? (
           <ImageMessage setCarousel={setCarousel} images={message.content} />
         ) : (
-          <></>
+          <>
+             <audio controls src={message.content} />
+          </>
         )}
       </div>
     </div>

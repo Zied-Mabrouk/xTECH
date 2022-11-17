@@ -4,7 +4,7 @@ import { FileUploader } from "react-drag-drop-files";
 import { sendMessage } from "../../../api";
 import EmojiPicker from "emoji-picker-react";
 import Dictaphone from "../Dictaphone/Dictaphone";
-
+import VoiceRecorder from "../VoiceRecorder/VoiceRecorder";
 const Input = ({
   conversation,
   setConversation,
@@ -63,6 +63,32 @@ const Input = ({
     );
     socket.emit("send_message", newMessage);
   };
+  const onSendAudio = async(content) => {
+    if(!content) return;
+  
+    const newMessage = {
+      from: user?._id,
+      to: conversation?.friend?._id,
+      date: new Date(),
+      content:content,
+      type: 2,
+    };
+    const newConversation = await sendMessage(newMessage);
+    setConversation({
+      ...conversation,
+      messages: newConversation,
+    });
+    
+    setList(
+      list.map((item) =>
+        item._id === conversation.friend._id
+          ? { ...item, lastMessage: newMessage }
+          : item
+      )
+    );
+    socket.emit("send_message", newMessage);
+  };
+
   const wrapperRef = React.createRef();
   React.useEffect(() => {
     function handleClickOutside(event) {
@@ -77,6 +103,8 @@ const Input = ({
   }, [displayDragAndDrop, wrapperRef]);
   return (
     <div className="input-container">
+      
+      <Dictaphone onSend={onSend} active={conversation?true:false} setMessage={setMessage} />
       <div className="input">
         <div className={"input-tools" + (conversation ? "" : " disabled")}>
           {displayDragAndDrop && conversation && (
@@ -115,7 +143,8 @@ const Input = ({
               fill="#6588DE"
             />
           </svg>
-          <Dictaphone onSend={onSend} active={conversation?true:false} setMessage={setMessage} />
+         
+          <VoiceRecorder active={conversation?true:false} onSendAudio={onSendAudio}  />
 
           {displayEmojis && (
             <EmojiPicker

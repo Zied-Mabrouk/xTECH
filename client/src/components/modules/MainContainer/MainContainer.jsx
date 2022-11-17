@@ -19,7 +19,6 @@ const MainContainer = ({
   let [socket, setSocket] = React.useState(null);
   let [dataSocket, setDataSocket] = React.useState();
   let [contextMenu, setContextMenu] = React.useState({user:user._id,open:false,styles:{} });
-  
 
   const images = conversation?.messages
     .filter((message) => message.type === 1)
@@ -117,7 +116,7 @@ const MainContainer = ({
           <div className="no-message">No message</div>
         )}
       </div>
-
+     
       <Input
         conversation={conversation}
         setConversation={setConversation}
