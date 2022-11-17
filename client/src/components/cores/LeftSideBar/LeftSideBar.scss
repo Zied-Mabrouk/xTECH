@@ -16,6 +16,14 @@
     overflow-y: auto;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    input{
+      background-color: transparent;
+      outline: none;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      box-shadow: 0 0 1px rgb(0 0 0 / 50%);
+    }
   }
   .sidebar-header {
     .sidebar-header-profile {

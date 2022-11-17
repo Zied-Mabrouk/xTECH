@@ -14,13 +14,15 @@ const LeftSideBar = ({
   selection,
   setSelection,
   conversation,
-  setConversation
+  setConversation,
+ 
 }) => {
 
   
   const {user,setUser} = React.useContext(UserContext);
   let [switchAccount,setSwitchAccount] = React.useState(false);
   let [users,setUsers] = React.useState([]);
+  let [filter, setFilter] = React.useState("");
   React.useEffect(()=>{
     fetchUsers().then((data)=>{
       setUsers(data);
@@ -28,23 +30,22 @@ const LeftSideBar = ({
   },[])
   React.useEffect(() => {
     if (!user?._id) return;
+    setFilter("")
     switch (selection) {
       case 0:
         fetchFriends(user._id).then((data) => setList(data));
         break;
       case 1:
-        setList([])
-        break;
-      case 2:
         fetchFavorites(user._id).then((data) => setList(data));
         break;
-      case 3:
-        setList([])
+      case 2:
+        fetchFriends(user._id).then((data) => setList(data));
         break;
+     
       default:
         fetchFriends(user._id).then((data) => setList(data));
     }
-  }, [selection, user?._id, setList,switchAccount]);
+  }, [selection, user?._id, setList,switchAccount,setFilter]);
   const status = getStatus(user?.status.value);
   return (
     <>
@@ -82,7 +83,15 @@ const LeftSideBar = ({
       </div>
 
       <div className="sidebar-content">
-        {list && list.filter(friend=>friend.lastMessage).sort((a,b)=>b.lastMessage && (new Date(b.lastMessage?.date) - new Date(a.lastMessage?.date))).map((u, key) => (
+        {
+          selection=== 2 &&
+          <input placeholder="Search..." value={filter} onChange={(e)=>setFilter(e.target.value)} />
+        }
+        {list && 
+        list
+        .filter(friend=>friend.lastMessage && (friend.firstName.toLowerCase().includes(filter.toLowerCase()) || friend.lastName.toLowerCase().includes(filter.toLowerCase())))
+        .sort((a,b)=>b.lastMessage && (new Date(b.lastMessage?.date) - new Date(a.lastMessage?.date)))
+        .map((u, key) => (
           <UserItem
             user={u}
             key={key}
