@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchFavorites, fetchFriends, fetchUsers } from "../../../api";
+import { fetchFavorites, fetchFriends } from "../../../api";
 import { navIcons } from "../../../utils/NavIcons";
 import UserItem from "../UserItem/UserItem";
 import "./LeftSideBar.scss";
@@ -19,15 +19,9 @@ const LeftSideBar = ({
 }) => {
 
   
-  const {user,setUser} = React.useContext(UserContext);
-  let [switchAccount,setSwitchAccount] = React.useState(false);
-  let [users,setUsers] = React.useState([]);
+  const {user} = React.useContext(UserContext);
   let [filter, setFilter] = React.useState("");
-  React.useEffect(()=>{
-    fetchUsers().then((data)=>{
-      setUsers(data);
-    });
-  },[])
+
   React.useEffect(() => {
     if (!user?._id) return;
     setFilter("")
@@ -45,7 +39,7 @@ const LeftSideBar = ({
       default:
         fetchFriends(user._id).then((data) => setList(data));
     }
-  }, [selection, user?._id, setList,switchAccount,setFilter]);
+  }, [selection, user?._id, setList,setFilter]);
   const status = getStatus(user?.status.value);
   return (
     <>
@@ -60,25 +54,7 @@ const LeftSideBar = ({
             </h1>
             <Status status={status} userStatus={user?.status} icon={true}/>
           </div>
-          <div className="switch-account">
-            <img src="./switch.png" alt="" onClick={()=>setSwitchAccount(!switchAccount)} />
-            {
-            switchAccount &&
-
-            <div className="switch-acount-dropdown">
-              {users.map((user,index)=>(
-                <div key={index} className="switch-acount-dropdown-item" onClick={()=>{
-                  setUser(user);
-                  setConversation(null);
-                  setSwitchAccount(false);
-                }}>
-                  {user.firstName + " " + user.lastName}
-                  </div>
-              )
-              )}
-            </div>
-            }
-          </div>
+          
         </div>
       </div>
 

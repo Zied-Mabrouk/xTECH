@@ -3,10 +3,11 @@ import React from "react"
 // import io from 'socket.io-client';
 import SideBar from './components/modules/SideBar/SideBar';
 import { UserContext } from './utils/UserContext';
-import { fetchUserByName, getConversation, init } from './api';
+import {  getConversation, init } from './api';
 import LeftSideBar from './components/cores/LeftSideBar/LeftSideBar';
 import RightSideBar from './components/cores/RightSideBar/RightSideBar';
 import MainContainer from './components/modules/MainContainer/MainContainer';
+import Login from './components/modules/Login/Login';
 
 function App() {
   
@@ -26,7 +27,7 @@ function App() {
   React.useEffect(() => {
     init();
     if(user) return;
-      fetchUserByName("Zied", "Mabrouk").then(data => setUser(data))
+      //fetchUserByName("Zied", "Mabrouk").then(data => setUser(data))
       
   }, [user])
   const handleOpenConversation = async (to) => {
@@ -40,7 +41,8 @@ function App() {
   }
   let [list, setList] = React.useState([]);
   return (
-    <UserContext.Provider value={{user,setUser}}>
+    user?
+   ( <UserContext.Provider value={{user,setUser}}>
       <SideBar classname={"left-sidebar"} >
         <LeftSideBar
           handleOpenConversation={handleOpenConversation}
@@ -60,7 +62,8 @@ function App() {
         <RightSideBar setCarousel={setCarousel}   handleOpenBar={handleOpenBar} contact={displayBar.contact} conversation={conversation}/>
       </SideBar>
 
-    </UserContext.Provider>
+    </UserContext.Provider>)
+    :<Login setUser={setUser} />
   );
 }
 

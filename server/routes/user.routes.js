@@ -26,6 +26,18 @@ router.post("/", async (req, res) => {
     res.status(500).json({ err: err });
   }
 });
+router.post("/login", async (req, res) => {
+  try {
+    let user = await UserModel.findOne(req.body);
+    if(!user){
+      res.send({err: "User not found"});
+      return;
+    }
+    res.status(200).send(user);
+  } catch (err) {
+    res.send({err: "User not found"});
+  }
+});
 router.post("/fetch-by-name", async (req, res) => {
   try {
     let users = await UserModel.findOne(req.body);
