@@ -1,8 +1,0 @@
-<utilisateur-twitter>
-    <profil id="5">
-        <pseudo>monpseudo</pseudo>
-        <password>monpassword</password>
-        <email>monemail</email>
-    </profil>
-    <tweet>Hello world!</tweet>
-</utilisateur-twitter>
