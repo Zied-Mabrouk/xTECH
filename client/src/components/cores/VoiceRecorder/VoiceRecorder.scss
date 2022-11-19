@@ -28,3 +28,20 @@
           }
     }
 }
+
+@media (max-width: 768px){
+    .voice-recorder{
+        &-ui{
+           .recording-time{
+            span{
+                font-size: 24px;
+            }
+           }
+           .recordings-container{
+            audio{
+                width: 100px;
+            }
+           }
+        }
+    }
+}

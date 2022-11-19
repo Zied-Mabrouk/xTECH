@@ -1,6 +1,6 @@
 import { formatMinutes, formatSeconds } from "../../../utils/format-time";
 import { FaTimes, FaSave, FaMicrophone } from "react-icons/fa";
-import "./styles.css";
+import "./styles.scss";
 
 export default function RecorderControls({ recorderState, handlers }) {
   const { recordingMinutes, recordingSeconds, initRecording } = recorderState;

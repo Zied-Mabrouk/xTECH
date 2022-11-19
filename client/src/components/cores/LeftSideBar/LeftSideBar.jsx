@@ -13,9 +13,7 @@ const LeftSideBar = ({
   setList,
   selection,
   setSelection,
-  conversation,
-  setConversation,
- 
+  conversation
 }) => {
 
   
@@ -25,22 +23,34 @@ const LeftSideBar = ({
   React.useEffect(() => {
     if (!user?._id) return;
     setFilter("")
+    setList([])
     switch (selection) {
       case 0:
+        if(user.friends.length === 0) {
+          return;
+        }
         fetchFriends(user._id).then((data) => setList(data));
         break;
       case 1:
+        if(user.favorites.length === 0) {
+          return;
+        }
         fetchFavorites(user._id).then((data) => setList(data));
         break;
       case 2:
+        if(user.friends.length === 0) {
+          return;
+        }
         fetchFriends(user._id).then((data) => setList(data));
         break;
      
       default:
         fetchFriends(user._id).then((data) => setList(data));
     }
-  }, [selection, user?._id, setList,setFilter]);
+  }, [selection, user?._id,user?.friends,user?.favorites, setList,setFilter]);
+  
   const status = getStatus(user?.status.value);
+
   return (
     <>
       <div className="sidebar-header">
@@ -75,7 +85,7 @@ const LeftSideBar = ({
             active={conversation && conversation.friend._id === u._id}
           />
         ))}
-        {list && list.filter(friend=>!friend.lastMessage).map((u, key) => (
+        {list && list?.filter(friend=>!friend.lastMessage)?.map((u, key) => (
           <UserItem
             user={u}
             key={key}
