@@ -69,6 +69,20 @@ export const fetchLogin = async (login) => {
   if (data.err) return null;
   return data;
 };
+export const fetchSignUp = async (account) => {
+  const userURL = URL + "users/sign-up";
+  const res = await fetch(userURL, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(account),
+  });
+  const data = await res.json();
+  if (data.err) return null;
+  return data;
+};
 
 export const sendMessage = async (message) => {
   const messageURL = URL + "messages/send";

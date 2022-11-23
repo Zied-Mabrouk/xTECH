@@ -15,7 +15,7 @@
     label {
       text-transform: capitalize;
     }
-    input {
+    input,select {
       outline: none;
       box-shadow: 0 0 5px rgb(0, 0, 0, 0.5);
       padding: 4px 8px;
@@ -33,5 +33,10 @@
     cursor: pointer;
     outline: none;
     box-shadow: 0 0 5px rgb(0, 0, 0, 0.5);
+  }
+  .extra {
+    color: var(--secondary-color);
+    cursor: pointer;
+    text-decoration: underline;
   }
 }
