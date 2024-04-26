@@ -1,10 +1,10 @@
 import React from "react";
-import "./MainContainer.scss";
 import io from "socket.io-client";
-import Message from "../../cores/Message/Message";
-import Input from "../../cores/Input/Input";
 import Carousel from "../../cores/Carousel/Carousel";
 import ContextMenu from "../../cores/ContextMenu/ContextMenu";
+import Input from "../../cores/Input/Input";
+import Message from "../../cores/Message/Message";
+import "./MainContainer.scss";
 
 const MainContainer = ({
   conversation,
@@ -14,11 +14,16 @@ const MainContainer = ({
   list,
   setList,
   handleOpenBar,
-  carousel, setCarousel
+  carousel,
+  setCarousel,
 }) => {
   let [socket, setSocket] = React.useState(null);
   let [dataSocket, setDataSocket] = React.useState();
-  let [contextMenu, setContextMenu] = React.useState({user:user._id,open:false,styles:{} });
+  let [contextMenu, setContextMenu] = React.useState({
+    user: user._id,
+    open: false,
+    styles: {},
+  });
 
   const images = conversation?.messages
     .filter((message) => message.type === 1)
@@ -30,12 +35,10 @@ const MainContainer = ({
     if (!user?._id) return;
     // if this session's user is the sender of the message
     if (dataSocket.from === user._id) {
-      setConversation(prev=>(
-        {
-          ...prev,
-          messages: [...prev?.messages, dataSocket],
-        }
-      ));
+      setConversation((prev) => ({
+        ...prev,
+        messages: [...prev?.messages, dataSocket],
+      }));
       return;
     }
     // if this session's user is the receiver of the message
@@ -62,45 +65,42 @@ const MainContainer = ({
   }, [dataSocket, user, setConversation, setList]);
 
   React.useEffect(() => {
-    const newSocket = io("http://localhost:5000");
+    const newSocket = io("http://localhost:3001");
     newSocket.on("receive_message", (data) => {
       setDataSocket(data);
     });
     setSocket(newSocket);
-    setContextMenu((prev)=>({...prev,user:user._id}));
-    return () =>{
+    setContextMenu((prev) => ({ ...prev, user: user._id }));
+    return () => {
       setSocket((prev) => {
         prev.disconnect();
-        return (prev.removeAllListeners("receive_message"))
+        return prev.removeAllListeners("receive_message");
       });
-    }
+    };
   }, [user]);
 
-
-
   return (
-    <div className="main-container" style={{ width: width }} onContextMenu={(e)=>e.preventDefault()}>
+    <div
+      className="main-container"
+      style={{ width: width }}
+      onContextMenu={(e) => e.preventDefault()}
+    >
       <div className="conversation">
-        {
-          contextMenu.open &&
-          <ContextMenu 
-          contextMenu={contextMenu} 
-          setContextMenu={setContextMenu}
-           setConversation={setConversation} 
-           setList={setList}
-           />
-        }
+        {contextMenu.open && (
+          <ContextMenu
+            contextMenu={contextMenu}
+            setContextMenu={setContextMenu}
+            setConversation={setConversation}
+            setList={setList}
+          />
+        )}
         {conversation ? (
           conversation?.messages?.map((m, key) => (
             <Message
               key={key}
               setContextMenu={setContextMenu}
               handleOpenBar={handleOpenBar}
-              user={
-                 m.from === user?._id
-                  ? user
-                  : conversation.friend
-              }
+              user={m.from === user?._id ? user : conversation.friend}
               displayAvatar={
                 key !== 0 && conversation.messages[key - 1].from === m.from
                   ? false
@@ -116,7 +116,7 @@ const MainContainer = ({
           <div className="no-message">No message</div>
         )}
       </div>
-     
+
       <Input
         conversation={conversation}
         setConversation={setConversation}

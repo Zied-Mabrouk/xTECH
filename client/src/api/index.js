@@ -1,4 +1,4 @@
-const URL = "http://localhost:5000/";
+const URL = "http://localhost:3001/";
 
 export const init = async () => {
   const usersURL = URL + "users/init";
